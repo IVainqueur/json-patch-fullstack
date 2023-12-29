@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { logger } from '../index.js';
+import process from 'node:process';
 
 const login = (req, res) => {
     try {

@@ -5,6 +5,8 @@ const patchService = (req, res) => {
     try {
         const { json, patch } = req.body;
         if (!json || !patch) throw new Error("JSON or patch missing or invalid");
+        // validate json
+        if (typeof json !== 'object') throw new Error("JSON is not an object");
         const patchedJson = jsonpatch.apply_patch(json, patch);
         logger.info("[PATCH/] ", "JSON patched successfully");
         return res.json({success: true, patched_output: patchedJson});

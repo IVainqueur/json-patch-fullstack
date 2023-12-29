@@ -11,7 +11,7 @@ config()
 logger.setDate(() => new Date().toISOString())
 
 const app = express()
-app.listen(3000, () => logger.info('Server running on port 3000'))
+const server = app.listen(3000, () => logger.info('Server running on port 3000'))
 
 app.use(cors())
 app.use(morgan(':date[iso] :method :url :status :response-time ms - :res[content-length]'))
@@ -21,5 +21,8 @@ app.use('/api/auth', authRouter)
 app.use('/api/patch', patchRouter)
 
 export {
-    logger
+    logger,
+    server
 }
+
+export default app
