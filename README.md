@@ -1,5 +1,6 @@
-# json-patch-
+# json-patch-fullstack
 Repository contains frontend and backend. 
+Find the docker image [here](https://hub.docker.com/r/ivainqueur/json-patch-fullstack/)
 
 ## Backend
 Nodejs microservice with two major functionalities:
