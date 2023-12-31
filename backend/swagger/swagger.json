@@ -1,0 +1,157 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Backend API",
+        "description": "API for authentication and JSON patching"
+    },
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "summary": "User login",
+                "description": "Authenticate user and get JWT token",
+                "requestBody": {
+                    "description": "User credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "username": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "username",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful login",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "success": true,
+                                    "token": "your-jwt-token"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Malformed request",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "success": false,
+                                    "error": "Error message"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/patch": {
+            "patch": {
+                "summary": "Apply JSON patch",
+                "description": "Apply a specified JSON patch to a JSON object",
+                "requestBody": {
+                    "description": "JSON patch request",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "json": {
+                                        "type": "object"
+                                    },
+                                    "patch": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "object",
+                                            "properties": {
+                                                "op": {
+                                                    "type": "string"
+                                                },
+                                                "path": {
+                                                    "type": "string"
+                                                },
+                                                "value": {}
+                                            },
+                                            "required": [
+                                                "op",
+                                                "path"
+                                            ]
+                                        }
+                                    }
+                                },
+                                "required": [
+                                    "json",
+                                    "patch"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful patch application",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "success": true,
+                                    "patched_output": "patched-json-object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "success": false,
+                                    "error": "Error message"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "UnAuthorized Request",
+                        "content": {
+                            "application/json": {
+                                "example": {
+                                    "success": false,
+                                    "error": "Error message"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "Authorization": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
